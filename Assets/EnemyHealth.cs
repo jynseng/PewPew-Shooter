@@ -4,18 +4,24 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    [SerializeField] int healthPoints = 50;
+    [SerializeField] float healthPoints = 50f;
     [SerializeField] AudioSource damageSound = null;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    public bool TakeDamage(float damage) {
         
+        // damageSound.Play();
+        healthPoints -= Mathf.Abs(damage);
+        if (healthPoints <= 0)
+        {
+            Die();
+        }
+        return true;
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    private void Die() {
+        Debug.Log("I am ded");
+        Destroy(gameObject);
+        // GetComponent<Animator>().SetTrigger("Die");
     }
 }
