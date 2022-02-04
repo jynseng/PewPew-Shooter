@@ -6,10 +6,11 @@ public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] float healthPoints = 50f;
     [SerializeField] AudioSource damageSound = null;
+    [SerializeField] AudioSource deathSound = null;
 
     public bool TakeDamage(float damage) {
         
-        // damageSound.Play();
+        damageSound.Play();
         healthPoints -= Mathf.Abs(damage);
         if (healthPoints <= 0)
         {
@@ -20,8 +21,9 @@ public class EnemyHealth : MonoBehaviour
     }
 
     private void Die() {
-        Debug.Log("I am ded");
-        Destroy(gameObject);
+        deathSound.Play(); // Play SFX
+        Destroy(gameObject.GetComponent<SpriteRenderer>());
         // GetComponent<Animator>().SetTrigger("Die");
+        Destroy(gameObject, 2f);
     }
 }

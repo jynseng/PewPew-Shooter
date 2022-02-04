@@ -7,6 +7,15 @@ public class Bullet : MonoBehaviour
     [SerializeField] GameObject hitEffect;
     [SerializeField] float damage = 10f;
 
+
+    void OnEnable() {
+        Invoke("SelfDestruct", 4);
+    }
+
+    void SelfDestruct() {
+        Destroy(gameObject);
+    }   
+
     void OnCollisionEnter2D(Collision2D collision) {
         GameObject effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
 
@@ -17,6 +26,5 @@ public class Bullet : MonoBehaviour
         Destroy(effect, 5f);
         Destroy(gameObject);
     }
-
     
 }
