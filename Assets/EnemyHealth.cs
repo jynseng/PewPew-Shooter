@@ -23,6 +23,7 @@ public class EnemyHealth : MonoBehaviour
     private void Die() {
         deathSound.Play(); // Play SFX
         Destroy(gameObject.GetComponentInChildren<SpriteRenderer>());
+        Destroy(gameObject.GetComponentInChildren<BoxCollider2D>());
         // GetComponent<Animator>().SetTrigger("Die");
         Destroy(gameObject, 2f);
     }
