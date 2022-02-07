@@ -9,20 +9,24 @@ public class PlayerHealth : MonoBehaviour
 
     public HealthBar healthBar;
 
+    [SerializeField] AudioSource damageSound = null;
+
     void Start() {
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            TakeDamage(20);
-        }
+
     }
 
-    void TakeDamage(int damage) {
+    public void TakeDamage(int damage) {
+        damageSound.Play();
+        
         currentHealth -= damage;
-
         healthBar.SetHealth(currentHealth);
+        if (currentHealth == 0) {
+            Debug.Log("Game Over");
+        }
     }
 }
