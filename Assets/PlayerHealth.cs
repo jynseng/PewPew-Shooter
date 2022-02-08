@@ -9,7 +9,8 @@ public class PlayerHealth : MonoBehaviour
 
     public HealthBar healthBar;
 
-    [SerializeField] AudioSource damageSound = null;
+    [SerializeField] AudioSource damageSound;
+    [SerializeField] AudioSource deathSound;
 
     void Start() {
         currentHealth = maxHealth;
@@ -25,8 +26,19 @@ public class PlayerHealth : MonoBehaviour
         
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
-        if (currentHealth == 0) {
-            Debug.Log("Game Over");
+        if (currentHealth <= 0) {
+            Die();
         }
+    }
+
+    private void Die() {
+        // Create separate gameObject to play Death SFX, lets Player object self-destruct immediately
+        GameObject deathEffects = new GameObject("deathEffects");
+        AudioSource audioSource = deathEffects.AddComponent<AudioSource>();
+        audioSource.clip = deathSound.clip;
+        audioSource.Play();
+        Destroy(audioSource, 2f);
+        
+        Destroy(gameObject);
     }
 }

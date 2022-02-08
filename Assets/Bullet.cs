@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] GameObject hitEffect;
-    [SerializeField] float damage = 10f;
+    [SerializeField] int damage = 10;
 
 
     void OnEnable() {

@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    [SerializeField] float healthPoints = 50f;
+    [SerializeField] int maxHealth = 50;
     [SerializeField] AudioSource damageSound = null;
     [SerializeField] AudioSource deathSound = null;
 
-    public bool TakeDamage(float damage) {
-        
+    public HealthBar healthBar;
+    public int currentHealth;
+
+    void Start() {
+        healthBar.SetMaxHealth(maxHealth);
+        currentHealth = maxHealth;
+    }
+
+    public bool TakeDamage(int damage) {
+        currentHealth -= damage;
+        healthBar.SetHealth(currentHealth);
         damageSound.Play();
-        healthPoints -= Mathf.Abs(damage);
-        if (healthPoints <= 0)
+        if (currentHealth <= 0)
         {
             Die();
         }
@@ -22,6 +30,7 @@ public class EnemyHealth : MonoBehaviour
 
     private void Die() {
         deathSound.Play(); // Play SFX
+        GetComponentInChildren<Canvas>().enabled = false;
         Destroy(gameObject.GetComponentInChildren<SpriteRenderer>());
         Destroy(gameObject.GetComponentInChildren<BoxCollider2D>());
         // GetComponent<Animator>().SetTrigger("Die");
