@@ -32,7 +32,7 @@ public class EnemyHealth : MonoBehaviour
         deathSound.Play(); // Play SFX
         GetComponentInChildren<Canvas>().enabled = false;
         Destroy(gameObject.GetComponentInChildren<SpriteRenderer>());
-        Destroy(gameObject.GetComponentInChildren<BoxCollider2D>());
+        Destroy(gameObject.GetComponent<BoxCollider2D>());
         // GetComponent<Animator>().SetTrigger("Die");
         Destroy(gameObject, 2f);
     }

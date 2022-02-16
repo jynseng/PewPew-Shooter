@@ -598,6 +598,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aad506f9abe21bb46b0590e0ed68b0f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!50 &1782658888 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 2824140828845580490, guid: 497505cbe1846b7428d7b2d6174efc06, type: 3}
+  m_PrefabInstance: {fileID: 2824140828882851469}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1812579217
 GameObject:
   m_ObjectHideFlags: 0
@@ -1045,8 +1050,20 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 2824140828845580491, guid: 497505cbe1846b7428d7b2d6174efc06, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 1782658888}
+    - target: {fileID: 2824140828845580491, guid: 497505cbe1846b7428d7b2d6174efc06, type: 3}
+      propertyPath: dashSpeed
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 2824140828845580491, guid: 497505cbe1846b7428d7b2d6174efc06, type: 3}
       propertyPath: dashLength
-      value: 0.5
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2824140828845580491, guid: 497505cbe1846b7428d7b2d6174efc06, type: 3}
+      propertyPath: dashCooldown
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 2824140828882851471, guid: 497505cbe1846b7428d7b2d6174efc06, type: 3}
       propertyPath: healthBar

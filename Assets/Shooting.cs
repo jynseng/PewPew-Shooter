@@ -26,7 +26,7 @@ public class Shooting : MonoBehaviour
         var offset = toMouse * gunRadius;
         firePoint.position = centerPoint + offset; // Move firepoint to closest point to cursor
         
-        float rot_z = Mathf.Atan2(toMouse.y, toMouse.x) * Mathf.Rad2Deg;
+        float rot_z = Mathf.Atan2(toMouse.y, toMouse.x) * Mathf.Rad2Deg; // Rotate arrow so always pointing out
         firePoint.rotation = Quaternion.Euler(0f, 0f, rot_z);
         
         if(Input.GetButtonDown("Fire1")) {
@@ -38,7 +38,8 @@ public class Shooting : MonoBehaviour
         shootSound.Play();
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        Vector2 aimDir = (mousePos - rb.position);
-        rb.AddForce(aimDir.normalized * bulletForce, ForceMode2D.Impulse);
+        Vector2 firePointPos2D = new Vector2(firePoint.position.x, firePoint.position.y); // Make firePoint.position a 2D vector
+
+        rb.AddForce((firePointPos2D-centerPoint).normalized * bulletForce, ForceMode2D.Impulse);
     }
 }
