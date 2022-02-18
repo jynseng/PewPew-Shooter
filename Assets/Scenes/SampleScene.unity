@@ -598,6 +598,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aad506f9abe21bb46b0590e0ed68b0f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!82 &1608312802 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 3180399799422878631, guid: ceed7c0ae86d21945bd7221b4154643a, type: 3}
+  m_PrefabInstance: {fileID: 2057568966489661769}
+  m_PrefabAsset: {fileID: 0}
 --- !u!50 &1782658888 stripped
 Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 2824140828845580490, guid: 497505cbe1846b7428d7b2d6174efc06, type: 3}
@@ -937,12 +942,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3749835848226283327, guid: ceed7c0ae86d21945bd7221b4154643a, type: 3}
       propertyPath: scanRadius
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3749835848226283327, guid: ceed7c0ae86d21945bd7221b4154643a, type: 3}
+      propertyPath: shootSound
+      value: 
+      objectReference: {fileID: 1608312802}
+    - target: {fileID: 3749835848226283327, guid: ceed7c0ae86d21945bd7221b4154643a, type: 3}
       propertyPath: chaseRadius
-      value: 25
+      value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 3749835848226283327, guid: ceed7c0ae86d21945bd7221b4154643a, type: 3}
+      propertyPath: enemyBulletPrefab
+      value: 
+      objectReference: {fileID: 37160044303894756, guid: 39a6313709959cd47bf3d0c1d3651d32, type: 3}
     m_RemovedComponents:
     - {fileID: 27228518, guid: ceed7c0ae86d21945bd7221b4154643a, type: 3}
     - {fileID: 8770501818790042765, guid: ceed7c0ae86d21945bd7221b4154643a, type: 3}
