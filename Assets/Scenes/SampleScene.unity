@@ -885,11 +885,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2057568965811514145, guid: ceed7c0ae86d21945bd7221b4154643a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.39
+      value: -8.89
       objectReference: {fileID: 0}
     - target: {fileID: 2057568965811514145, guid: ceed7c0ae86d21945bd7221b4154643a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2.02
       objectReference: {fileID: 0}
     - target: {fileID: 2057568965811514145, guid: ceed7c0ae86d21945bd7221b4154643a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -931,7 +931,21 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
-    m_RemovedComponents: []
+    - target: {fileID: 3749835848226283327, guid: ceed7c0ae86d21945bd7221b4154643a, type: 3}
+      propertyPath: moveSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3749835848226283327, guid: ceed7c0ae86d21945bd7221b4154643a, type: 3}
+      propertyPath: scanRadius
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3749835848226283327, guid: ceed7c0ae86d21945bd7221b4154643a, type: 3}
+      propertyPath: chaseRadius
+      value: 25
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 27228518, guid: ceed7c0ae86d21945bd7221b4154643a, type: 3}
+    - {fileID: 8770501818790042765, guid: ceed7c0ae86d21945bd7221b4154643a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ceed7c0ae86d21945bd7221b4154643a, type: 3}
 --- !u!1001 &2534222893445201418
 PrefabInstance:

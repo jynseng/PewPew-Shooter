@@ -138,7 +138,8 @@ GameObject:
   - component: {fileID: 2057568965811514145}
   - component: {fileID: 2057568965811514147}
   - component: {fileID: 2057568965811514144}
-  - component: {fileID: 27228518}
+  - component: {fileID: 3749835848226283327}
+  - component: {fileID: 1936778114881339983}
   m_Layer: 0
   m_Name: GreenEnemy
   m_TagString: Enemy
@@ -207,7 +208,22 @@ MonoBehaviour:
   deathSound: {fileID: 2360270587401087784}
   healthBar: {fileID: 0}
   currentHealth: 0
---- !u!114 &27228518
+--- !u!114 &3749835848226283327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2057568965811514156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af641341358c6024eb34a47ed9391b07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scanRadius: 10
+  chaseRadius: 30
+  moveSpeed: 3
+--- !u!114 &1936778114881339983
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
