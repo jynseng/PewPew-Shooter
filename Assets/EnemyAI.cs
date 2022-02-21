@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
-{
-    //EnemyHealth health = null;
-    
+{   
     [SerializeField] float scanRadius = 5f;
     [SerializeField] float chaseRadius = 50f;
     [SerializeField] float roamRadius = 3f;
@@ -15,6 +13,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] AudioSource shootSound = null;
     [SerializeField] GameObject enemyBulletPrefab;
     public Transform firePoint;
+    public EnemyHealth health = null;
 
     bool targeting = false;
     float distanceToTarget = Mathf.Infinity;
@@ -39,7 +38,7 @@ public class EnemyAI : MonoBehaviour
         distanceToTarget = Vector2.Distance(target.position, transform.position);
         distanceToRandomDest = Vector2.Distance(randomDest, transform.position);
 
-        // If player out of reach while targeting, stop chasing and start roaming
+        // If player out of reach while targeting, stop chasing and start roaming again
         if (targeting && distanceToTarget > chaseRadius) {
             targeting = false;
             PickNewRandomDest();
@@ -72,6 +71,7 @@ public class EnemyAI : MonoBehaviour
     }
 
     void Shoot() {
+        if (health.currentHealth <= 0) {return;} // If this enemy is dead, don't shoot
         shootSound.Play();
         GameObject bullet = Instantiate(enemyBulletPrefab, firePoint.position, Quaternion.identity);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();

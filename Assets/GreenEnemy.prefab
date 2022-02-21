@@ -260,6 +260,7 @@ MonoBehaviour:
   shootSound: {fileID: 3180399799422878631}
   enemyBulletPrefab: {fileID: 37160044303894756, guid: 39a6313709959cd47bf3d0c1d3651d32, type: 3}
   firePoint: {fileID: 2784164742441818791}
+  health: {fileID: 2057568965811514144}
 --- !u!114 &1936778114881339983
 MonoBehaviour:
   m_ObjectHideFlags: 0

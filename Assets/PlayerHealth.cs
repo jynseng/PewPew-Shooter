@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour
     public int currentHealth;
 
     public HealthBar healthBar;
+    PlayerMovement movement;
 
     [SerializeField] AudioSource damageSound;
     [SerializeField] AudioSource deathSound;
@@ -15,13 +16,12 @@ public class PlayerHealth : MonoBehaviour
     void Start() {
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
-    }
-
-    void Update() {
-
+        movement = gameObject.GetComponent<PlayerMovement>();
     }
 
     public void TakeDamage(int damage) {
+        if (movement.invincible) {return;} // If player is invincible (i.e. while dashing, as tracked in "PlayerMovement"), return
+        
         damageSound.Play();
         
         currentHealth -= damage;
