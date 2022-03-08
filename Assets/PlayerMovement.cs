@@ -12,6 +12,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float dashLength = 0.15f;
     [SerializeField] private float dashCooldown = .3f;
 
+    // Dash timing mechanic:
+    private float minDash = .25f; // Minimum time after dashing when player can dash again
+    private float maxDash = 1f; // Amount of time after dashing when player will get maximum dash
+    private float maxWindow = .5f; // Window of time to get maximum dash, starts at maxDash
+    private float fullDashTime = 3f; // Full amount of time from dash start to end to cooldown ready again (to calculate dash timing boost)
+    private float fullDashCounter;
+
     private Vector2 moveInput;
     private Vector2 dashDirection; 
     private float activeMoveSpeed;
@@ -57,9 +64,15 @@ public class PlayerMovement : MonoBehaviour
     }
     
     private void Dash() {
-        if (dashCoolCounter <=0 && dashCounter <=0) { // Can only dash if cooldown ready and not currently dashing
+        /*if (dashCoolCounter <=0 && dashCounter <=0) { // Can only dash if cooldown ready and not currently dashing
                 activeMoveSpeed = dashSpeed;
                 dashCounter = dashLength;
+                invincible = true; // Become invincible while dashing
+        }*/
+        if (dashCoolCounter <=0 || dashCounter <= minDash) {
+                activeMoveSpeed = dashSpeed;
+                dashCounter = dashLength;
+                fullDashCounter = fullDashTime;
                 invincible = true; // Become invincible while dashing
         }
     }

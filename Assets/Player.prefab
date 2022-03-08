@@ -342,9 +342,9 @@ MonoBehaviour:
   rb: {fileID: 2824140828845580490}
   moveSpeed: 5
   invincible: 0
-  dashSpeed: 26
-  dashLength: 0.15
-  dashCooldown: 0.7
+  dashSpeed: 35
+  dashLength: 0.12
+  dashCooldown: 1
 --- !u!114 &2824140828845580485
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -23,7 +23,6 @@ public class PlayerHealth : MonoBehaviour
         if (movement.invincible) {return;} // If player is invincible (i.e. while dashing, as tracked in "PlayerMovement"), return
         
         damageSound.Play();
-        
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
         if (currentHealth <= 0) {

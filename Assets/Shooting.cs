@@ -15,7 +15,10 @@ public class Shooting : MonoBehaviour
     public float bulletForce = 10f;
 
     [SerializeField] AudioSource shootSound = null;
-    [SerializeField] float gunRadius = 1;
+    [SerializeField] float gunRadius = 1f;
+
+    [SerializeField] float fireCooldown = 0.2f;
+    private float shootCounter;
 
     // Update is called once per frame
     void Update()
@@ -29,17 +32,22 @@ public class Shooting : MonoBehaviour
         float rot_z = Mathf.Atan2(toMouse.y, toMouse.x) * Mathf.Rad2Deg; // Rotate arrow so always pointing out
         firePoint.rotation = Quaternion.Euler(0f, 0f, rot_z);
         
-        if(Input.GetButtonDown("Fire1")) {
+        if(Input.GetButton("Fire1")) {
             Shoot();
+        }
+
+        if (shootCounter > 0) {
+            shootCounter -= Time.deltaTime;
         }
     }
 
     void Shoot() {
+        if (shootCounter > 0) { return;}
         shootSound.Play();
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         Vector2 firePointPos2D = new Vector2(firePoint.position.x, firePoint.position.y); // Make firePoint.position a 2D vector
-
+        shootCounter = fireCooldown;
         rb.AddForce((firePointPos2D-centerPoint).normalized * bulletForce, ForceMode2D.Impulse);
     }
 }
