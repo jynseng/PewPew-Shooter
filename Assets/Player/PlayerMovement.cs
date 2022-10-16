@@ -14,7 +14,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform dashBar;
 
     // Experimental dash timing mechanic:
-    private float intervalStart = .5f; // Minimum time after dashing when player can dash again (start of timing interval)
+    [SerializeField] private float defaultIntervalStart = 0.5f; // Minimum time after dashing when player can dash again (start of timing interval)
+    private float intervalStart;
     //private float intervalEnd; // Amount of time after dashing when player will get maximum dash (end of timing interval)
     //private float maxWindow = .5f; // Window of time to get maximum dash, starts at intervalEnd
     //private float fullDashTime = 3f; // Full amount of time from dash start to end to cooldown ready again (to calculate dash timing boost)
@@ -25,11 +26,13 @@ public class PlayerMovement : MonoBehaviour
     private float activeMoveSpeed;
     private float dashCounter; // Active dashing counter
     private float dashCoolCounter; // Cooldown counter after performing a dash
+    
 
     void Start() {
         activeMoveSpeed = moveSpeed;
         dashCoolCounter = 0;
         dashBar.localScale = new Vector3(0,0,0);
+        intervalStart = defaultIntervalStart;
     }
 
     void Update() {
@@ -37,10 +40,9 @@ public class PlayerMovement : MonoBehaviour
         moveInput.y = Input.GetAxisRaw("Vertical");
 
         if (Input.GetKeyDown(KeyCode.Space)) {
-            //if (dashCounter > 2) { return; } // Remove multiple input for single button press
             dashDirection = moveInput;
             Dash();
-        }
+        }   
 
         // If currently dashing, decrement dash counter
         if (dashCounter > 0) {
@@ -48,12 +50,18 @@ public class PlayerMovement : MonoBehaviour
             Vector3 start = new Vector3(1,1,1);
             Vector3 end = new Vector3 (0,0,0);
             dashBar.localScale = Vector3.Lerp(start, end, (1-dashCounter/dashLength)); // Scale dashBar with dashCounter for testing purposes.
+            if (dashCounter <= intervalStart) { // Turn indicator blue when interval start 
+                dashBar.GetComponent<SpriteRenderer>().color = Color.blue;
+            } else {
+                dashBar.GetComponent<SpriteRenderer>().color = Color.white;
+            }
 
             if (dashCounter <= 0) { // If end of dash, then...
                 activeMoveSpeed = moveSpeed; // Reset move speed to normal
                 dashCoolCounter = dashCooldown; // Start cooldown timer
                 invincible = false;
-                dashBar.localScale = new Vector3(0,0,0);
+                dashBar.localScale = new Vector3(0,0,0); // Hide the dashBar visual indicator
+                intervalStart = defaultIntervalStart; // Reset intervalStart to default, in case player was chain-dashing
             }
         }
 
@@ -72,17 +80,15 @@ public class PlayerMovement : MonoBehaviour
     }
     
     private void Dash() {
-        /*if (dashCoolCounter <=0 && dashCounter <=0) { // Can only dash if cooldown ready and not currently dashing
-                activeMoveSpeed = dashSpeed;
-                dashCounter = dashLength;
-                invincible = true; // Become invincible while dashing
-        }*/
         if (dashCoolCounter <= 0) { // If dash has "cooled down"...
             if (dashCounter > 0) { // If player is currently dashing...
-                if (dashCounter <= intervalStart) { // If timed before the start of interval...
-                    Debug.Log("Nice one!");
-                }  else if (dashCounter >= intervalStart){
+                if (dashCounter <= intervalStart) { // Chain dash executed
+                    Debug.Log("Nice");
+                    intervalStart *= 0.8f; // Shrink interval after every chain dash
+                    Debug.Log(intervalStart);
+                }  else if (dashCounter >= intervalStart){ // Chain dash failed
                     Debug.Log("haha loser");
+                    // Disable dash button until set timer
                     return;
                 }
             }

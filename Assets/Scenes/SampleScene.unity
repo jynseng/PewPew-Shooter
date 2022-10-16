@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &3571353 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2824140828845580488, guid: 497505cbe1846b7428d7b2d6174efc06, type: 3}
+  m_PrefabInstance: {fileID: 2824140828882851469}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &135097575
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,6 +348,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420030}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -358,6 +364,19 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
+--- !u!114 &519420030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 341790239ad15954a9439d9f6d7aa203, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followTransform: {fileID: 3571353}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -385,7 +404,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 8.522065
+  orthographic size: 9.20895
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -855,7 +874,7 @@ Transform:
   m_GameObject: {fileID: 2019491676}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 2.3624, y: -0.8807, z: 0.8105492}
-  m_LocalScale: {x: 1.3767059, y: 1.4706322, z: 0.75048697}
+  m_LocalScale: {x: 4.3394375, y: 3.8457172, z: 0.75048697}
   m_Children: []
   m_Father: {fileID: 1232091861}
   m_RootOrder: 0
@@ -1077,15 +1096,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2824140828845580491, guid: 497505cbe1846b7428d7b2d6174efc06, type: 3}
       propertyPath: dashSpeed
-      value: 10
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2824140828845580491, guid: 497505cbe1846b7428d7b2d6174efc06, type: 3}
+      propertyPath: moveSpeed
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2824140828845580491, guid: 497505cbe1846b7428d7b2d6174efc06, type: 3}
       propertyPath: dashLength
-      value: 1
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2824140828845580491, guid: 497505cbe1846b7428d7b2d6174efc06, type: 3}
       propertyPath: dashCooldown
-      value: 2
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2824140828845580491, guid: 497505cbe1846b7428d7b2d6174efc06, type: 3}
+      propertyPath: defaultIntervalStart
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 2824140828882851471, guid: 497505cbe1846b7428d7b2d6174efc06, type: 3}
       propertyPath: healthBar
