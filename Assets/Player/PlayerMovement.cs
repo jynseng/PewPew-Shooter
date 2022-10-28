@@ -9,12 +9,17 @@ public class PlayerMovement : MonoBehaviour
     public bool invincible = false;
     
     [SerializeField] private float dashSpeed = 32f;
-    [SerializeField] private float dashLength = 0.15f;
-    [SerializeField] private float dashCooldown = .3f;
+    [SerializeField] private float dashLength = 0.2f;
+    [SerializeField] private float dashCooldown = 0.3f;
     [SerializeField] private Transform dashBar;
 
     // Experimental dash timing mechanic:
-    [SerializeField] private float defaultIntervalStart = 0.5f; // Minimum time after dashing when player can dash again (start of timing interval)
+    [SerializeField] private float defaultIntervalStart = 0.6f; // Minimum time after dashing when player can dash again (percent of dashLength)
+    [SerializeField] private float maxStamina = 10f;
+    public StaminaBar staminaBar;
+    public float stamina; // Current player stamina
+    private float dashCost = 3f; // Stamina cost of dash
+    private float staminaRegenRate = 1.5f; // Stamina points regenerated per second
     private float intervalStart;
     //private float intervalEnd; // Amount of time after dashing when player will get maximum dash (end of timing interval)
     //private float maxWindow = .5f; // Window of time to get maximum dash, starts at intervalEnd
@@ -32,7 +37,9 @@ public class PlayerMovement : MonoBehaviour
         activeMoveSpeed = moveSpeed;
         dashCoolCounter = 0;
         dashBar.localScale = new Vector3(0,0,0);
-        intervalStart = defaultIntervalStart;
+        intervalStart = dashLength*defaultIntervalStart;
+        stamina = maxStamina;
+        staminaBar.SetMaxStamina(maxStamina);
     }
 
     void Update() {
@@ -61,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
                 dashCoolCounter = dashCooldown; // Start cooldown timer
                 invincible = false;
                 dashBar.localScale = new Vector3(0,0,0); // Hide the dashBar visual indicator
-                intervalStart = defaultIntervalStart; // Reset intervalStart to default, in case player was chain-dashing
+                intervalStart = dashLength*defaultIntervalStart; // Reset intervalStart to default, in case player was chain-dashing
             }
         }
 
@@ -69,33 +76,38 @@ public class PlayerMovement : MonoBehaviour
         if (dashCoolCounter > 0) {
             dashCoolCounter -= Time.deltaTime;
         }
+
+        // Regenerate stamina over time, if not currently dashing
+        if (stamina < maxStamina && dashCounter <= 0 && dashCoolCounter < 0.1) {
+            stamina += Time.deltaTime * staminaRegenRate;
+            staminaBar.SetStamina(stamina);
+        }
     }
 
     void FixedUpdate() {
         if (dashCounter <= 0) { 
-            rb.MovePosition(rb.position + moveInput.normalized * activeMoveSpeed * Time.fixedDeltaTime); // Handle actual movement independent of time
+            rb.MovePosition(rb.position + moveInput.normalized * activeMoveSpeed * Time.fixedDeltaTime); // Handle actual movement independent of framerate
         } else {
             rb.MovePosition(rb.position + dashDirection.normalized * activeMoveSpeed * Time.fixedDeltaTime); // Handle movement while dashing
         }
     }
     
     private void Dash() {
-        if (dashCoolCounter <= 0) { // If dash has "cooled down"...
+        if (dashCoolCounter <= 0 && stamina >= dashCost) { // If dash has "cooled down"...
             if (dashCounter > 0) { // If player is currently dashing...
                 if (dashCounter <= intervalStart) { // Chain dash executed
-                    Debug.Log("Nice");
-                    intervalStart *= 0.8f; // Shrink interval after every chain dash
-                    Debug.Log(intervalStart);
+                    intervalStart *= 0.8f; // Shrink interval window after every chain dash
+                    stamina += dashCost;
                 }  else if (dashCounter >= intervalStart){ // Chain dash failed
-                    Debug.Log("haha loser");
-                    // Disable dash button until set timer
+                    // Disable dash button until set timer to prevent button spamming
                     return;
                 }
             }
+            stamina -= dashCost; // Dash costs player stamina
+            staminaBar.SetStamina(stamina);
             dashBar.localScale = new Vector3(1,1,1);
             activeMoveSpeed = dashSpeed;
             dashCounter = dashLength;
-            //fullDashCounter = fullDashTime;
             invincible = true; // Become invincible while dashing       
         }
     }
