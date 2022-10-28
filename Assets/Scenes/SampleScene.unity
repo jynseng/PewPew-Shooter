@@ -242,6 +242,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &594171236 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 596336338899523436, guid: 497505cbe1846b7428d7b2d6174efc06, type: 3}
+  m_PrefabInstance: {fileID: 2824140828882851469}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &648824265
 GameObject:
   m_ObjectHideFlags: 0
@@ -529,8 +534,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 277781136}
   - {fileID: 1879651714}
+  - {fileID: 277781136}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -637,6 +642,11 @@ Transform:
   m_Father: {fileID: 1232091861}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &2065594591 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 6561513820825563256, guid: 497505cbe1846b7428d7b2d6174efc06, type: 3}
+  m_PrefabInstance: {fileID: 2824140828882851469}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2057568966489661769
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -853,6 +863,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 2824140828845580491, guid: 497505cbe1846b7428d7b2d6174efc06, type: 3}
+      propertyPath: dashSound
+      value: 
+      objectReference: {fileID: 594171236}
+    - target: {fileID: 2824140828845580491, guid: 497505cbe1846b7428d7b2d6174efc06, type: 3}
       propertyPath: dashSpeed
       value: 37
       objectReference: {fileID: 0}
@@ -862,7 +876,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2824140828845580491, guid: 497505cbe1846b7428d7b2d6174efc06, type: 3}
       propertyPath: dashLength
-      value: 0.2
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2824140828845580491, guid: 497505cbe1846b7428d7b2d6174efc06, type: 3}
       propertyPath: staminaBar
@@ -870,7 +884,15 @@ PrefabInstance:
       objectReference: {fileID: 1879651715}
     - target: {fileID: 2824140828845580491, guid: 497505cbe1846b7428d7b2d6174efc06, type: 3}
       propertyPath: dashCooldown
-      value: 0.6
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2824140828845580491, guid: 497505cbe1846b7428d7b2d6174efc06, type: 3}
+      propertyPath: chainDashSound
+      value: 
+      objectReference: {fileID: 2065594591}
+    - target: {fileID: 2824140828845580491, guid: 497505cbe1846b7428d7b2d6174efc06, type: 3}
+      propertyPath: dashWindow_default
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2824140828845580491, guid: 497505cbe1846b7428d7b2d6174efc06, type: 3}
       propertyPath: defaultIntervalStart
@@ -880,6 +902,14 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 277781137}
+    - target: {fileID: 6561513820825563256, guid: 497505cbe1846b7428d7b2d6174efc06, type: 3}
+      propertyPath: m_Volume
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6561513820825563256, guid: 497505cbe1846b7428d7b2d6174efc06, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 497505cbe1846b7428d7b2d6174efc06, type: 3}
 --- !u!1001 &6222141638651606156
@@ -903,7 +933,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6222141639456440590, guid: c2a95b6e2dfaaff458bf94fef83015b1, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6222141639456440590, guid: c2a95b6e2dfaaff458bf94fef83015b1, type: 3}
       propertyPath: m_AnchorMax.x
@@ -963,7 +993,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6222141639456440590, guid: c2a95b6e2dfaaff458bf94fef83015b1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -200.1
+      value: -153.7
       objectReference: {fileID: 0}
     - target: {fileID: 6222141639456440590, guid: c2a95b6e2dfaaff458bf94fef83015b1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -977,6 +1007,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6222141639456440591, guid: c2a95b6e2dfaaff458bf94fef83015b1, type: 3}
+      propertyPath: gradient.ctime1
+      value: 16463
+      objectReference: {fileID: 0}
+    - target: {fileID: 6222141639456440591, guid: c2a95b6e2dfaaff458bf94fef83015b1, type: 3}
+      propertyPath: gradient.m_Mode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6222141640002781641, guid: c2a95b6e2dfaaff458bf94fef83015b1, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -984,6 +1022,18 @@ PrefabInstance:
     - target: {fileID: 6222141640002781641, guid: c2a95b6e2dfaaff458bf94fef83015b1, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6222141640002781642, guid: c2a95b6e2dfaaff458bf94fef83015b1, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6222141640002781642, guid: c2a95b6e2dfaaff458bf94fef83015b1, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6222141640002781642, guid: c2a95b6e2dfaaff458bf94fef83015b1, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2a95b6e2dfaaff458bf94fef83015b1, type: 3}
@@ -1004,7 +1054,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8231472400394701322, guid: 95f726dba5c716240bd9c62aacb8d966, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8231472400394701322, guid: 95f726dba5c716240bd9c62aacb8d966, type: 3}
       propertyPath: m_AnchorMax.x

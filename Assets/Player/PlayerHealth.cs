@@ -37,7 +37,6 @@ public class PlayerHealth : MonoBehaviour
         audioSource.clip = deathSound.clip;
         audioSource.Play();
         Destroy(audioSource, 2f);
-        
         Destroy(gameObject);
     }
 }
