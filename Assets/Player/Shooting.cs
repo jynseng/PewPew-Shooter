@@ -12,7 +12,7 @@ public class Shooting : MonoBehaviour
     private Vector2 toMouse;
     private Vector2 centerPoint;
 
-    public float bulletForce = 10f;
+    [SerializeField] float bulletForce = 30f;
 
     [SerializeField] AudioSource shootSound = null;
     [SerializeField] float gunRadius = 1f;
