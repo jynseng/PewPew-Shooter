@@ -21,8 +21,7 @@ public class Shooting : MonoBehaviour
     private float shootCounter;
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
         centerPoint = transform.position; // Center of player
         toMouse = (mousePos - centerPoint).normalized; // Vector2 between cursor and player center
@@ -50,4 +49,7 @@ public class Shooting : MonoBehaviour
         shootCounter = fireCooldown;
         rb.AddForce((firePointPos2D-centerPoint).normalized * bulletForce, ForceMode2D.Impulse);
     }
+
+    public Vector2 FaceDirection () {return toMouse;}
+
 }

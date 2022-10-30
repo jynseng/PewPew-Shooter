@@ -7,6 +7,9 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody2D rb; 
     public float moveSpeed = 5f;
     public bool invincible = false;
+    public StaminaBar staminaBar;
+    public float stamina;
+    public Shooting shooting;    
     
     [SerializeField] private float dashSpeed = 37f;
     [SerializeField] private float dashLength = 0.2f;
@@ -16,24 +19,19 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] AudioSource chainDashSound;
 
     // Experimental dash timing mechanic:
-    //[SerializeField] private float intervalStart_default = 0.6f; // Minimum time after dashing when player can dash again (percent of dashLength)
     [SerializeField] private float maxStamina = 10f;
     [SerializeField] private float dashWindow_default = 0.4f; // Length of chain dash window in seconds
     private float dashWindow;
-    public StaminaBar staminaBar;
-    public float stamina; // Current player stamina
     private float dashCost = 3f; // Stamina cost of dash
     private float staminaRegenRate = 1.5f; // Stamina points regenerated per second
-    //private float intervalStart;
     private float dashTimer = -1f; // Timer that starts at dash start
     private bool withinWindow = false;
     private bool dashAttempted = false; // Has player inputted "dash" during current dash? 
 
     private Vector2 moveInput;
-    private Vector2 dashDirection; 
     private float activeMoveSpeed;
     private float dashCounter; // Active dashing counter
-    //private float dashCoolCounter; // Cooldown counter after performing a dash
+    private Vector2 dashDirection;
 
     void Start() {
         activeMoveSpeed = moveSpeed;
@@ -52,7 +50,11 @@ public class PlayerMovement : MonoBehaviour
 
         // Dash
         if (Input.GetKeyDown(KeyCode.Space)) {
-            dashDirection = moveInput;
+            if (moveInput.magnitude > 0) {
+                dashDirection = moveInput;
+            } else {
+                dashDirection = shooting.FaceDirection();
+            }
             DashHandler();
         }   
 
@@ -64,9 +66,7 @@ public class PlayerMovement : MonoBehaviour
             dashBar.localScale = Vector3.Lerp(start, end, (dashTimer/dashLength+(dashWindow/2))); // Scale dashBar with dashCounter for testing purposes.
             if (dashCounter <= 0) { // If end of dash, then...
                 activeMoveSpeed = moveSpeed; // Reset move speed to normal
-                //dashCoolCounter = dashCooldown; // Start cooldown timer
                 invincible = false;
-                //intervalStart = dashLength*intervalStart_default; 
             }
         }
 
@@ -87,11 +87,6 @@ public class PlayerMovement : MonoBehaviour
                 dashWindow = dashWindow_default; // Reset dashWindow to default, in case player was chain-dashing
             }
         }
-
-        /* If dash cooldown counting down, decrement counter each frame
-        if (dashCoolCounter > 0) {
-            dashCoolCounter -= Time.deltaTime;
-        }*/
 
         // Regenerate stamina over time, if not currently dashing
         if (stamina < maxStamina && dashCounter <= 0 && dashTimer < 0) {
