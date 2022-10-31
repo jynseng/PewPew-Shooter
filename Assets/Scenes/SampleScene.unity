@@ -18585,14 +18585,14 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6789089186071182713, guid: 92792fe85410886428b5c94fd781d1e1,
         type: 3}
-      propertyPath: circle
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6789089186071182713, guid: 92792fe85410886428b5c94fd781d1e1,
-        type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 3571353}
+    - target: {fileID: 6789089186071182713, guid: 92792fe85410886428b5c94fd781d1e1,
+        type: 3}
+      propertyPath: camMoveFactor
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6789089186071182715, guid: 92792fe85410886428b5c94fd781d1e1,
         type: 3}
       propertyPath: m_Name

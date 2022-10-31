@@ -98,3 +98,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   dampTime: 0.15
+  camMoveFactor: 3

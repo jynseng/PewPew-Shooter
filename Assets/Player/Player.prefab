@@ -348,15 +348,14 @@ MonoBehaviour:
   invincible: 0
   staminaBar: {fileID: 0}
   stamina: 0
-  shooting: {fileID: 2824140828845580485}
   dashSpeed: 38
   dashLength: 0.2
   dashCooldown: 0.5
+  maxStamina: 10
+  dashWindow_default: 0.5
   dashBar: {fileID: 979051597383352639}
   dashSound: {fileID: 596336338899523436}
   chainDashSound: {fileID: 8467490331662995226}
-  maxStamina: 10
-  dashWindow_default: 0.5
 --- !u!114 &2824140828845580485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -995,7 +994,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 78dacaa7683244649a0346955bd8f949, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.5
-  m_Pitch: 1.2
+  m_Pitch: 2
   Loop: 0
   Mute: 0
   Spatialize: 0
