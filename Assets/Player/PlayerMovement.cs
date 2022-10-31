@@ -9,38 +9,37 @@ public class PlayerMovement : MonoBehaviour
     public bool invincible = false;
     public StaminaBar staminaBar;
     public float stamina;
-    public Shooting shooting;    
+    Shooting shooting = null;    
     
-    [SerializeField] private float dashSpeed = 37f;
-    [SerializeField] private float dashLength = 0.2f;
+    [SerializeField] private float dashSpeed = 35f;
+    [SerializeField] private float dashLength = 0.3f;
     [SerializeField] private float dashCooldown = 0.5f;
+    [SerializeField] private float maxStamina = 10f;
+    [SerializeField] private float dashWindow_default = 0.4f; // Length of chain dash window in seconds
     [SerializeField] private Transform dashBar;
     [SerializeField] AudioSource dashSound;
     [SerializeField] AudioSource chainDashSound;
 
-    // Experimental dash timing mechanic:
-    [SerializeField] private float maxStamina = 10f;
-    [SerializeField] private float dashWindow_default = 0.4f; // Length of chain dash window in seconds
     private float dashWindow;
     private float dashCost = 3f; // Stamina cost of dash
     private float staminaRegenRate = 1.5f; // Stamina points regenerated per second
     private float dashTimer = -1f; // Timer that starts at dash start
-    private bool withinWindow = false;
+    private bool withinWindow = false; // Was "dash" key pressed within chain-dash window?
     private bool dashAttempted = false; // Has player inputted "dash" during current dash? 
+    private int chainDashCount = 0; // How many dashes have been chained this dash?
 
     private Vector2 moveInput;
+    private Vector2 dashDirection;
     private float activeMoveSpeed;
     private float dashCounter; // Active dashing counter
-    private Vector2 dashDirection;
-
+    
     void Start() {
         activeMoveSpeed = moveSpeed;
-        //dashCoolCounter = 0;
         dashBar.localScale = new Vector3(0,0,0);
-        //intervalStart = dashLength*intervalStart_default;
         dashWindow = dashWindow_default;
         stamina = maxStamina;
-        staminaBar.SetMaxStamina(maxStamina);
+        if (staminaBar) {staminaBar.SetMaxStamina(maxStamina);}
+        shooting = GetComponent<Shooting>();
     }
 
     void Update() {
@@ -78,6 +77,7 @@ public class PlayerMovement : MonoBehaviour
             } else if (dashTimer < dashLength) { // Mid-dash before window
                 dashBar.GetComponent<SpriteRenderer>().color = Color.white;
             } else if (dashTimer < dashLength+dashCooldown) { // After dash, after window, before cooldown
+                chainDashCount = 0;
                 dashBar.localScale = new Vector3(0,0,0); // Hide the dashBar visual indicator
                 dashBar.GetComponent<SpriteRenderer>().color = Color.white;
                 withinWindow = false;
@@ -113,8 +113,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if (withinWindow && !dashAttempted) { // Chain-dash, no stamina req'd
-            chainDashSound.Play();
-            dashWindow *= 0.5f; // Cut window in half (player must have more precise timing)
+            chainDashCount++;
+            chainDashSound.volume = chainDashCount*0.2f + 0.1f; // SFX gets louder each successive dash
+             chainDashSound.Play();
+            dashWindow *= 0.5f; // Cut window in half (player must have more precise timing each successive dash)
             Dash();
             withinWindow = false; 
             return;
