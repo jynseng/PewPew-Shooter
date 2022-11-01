@@ -9,9 +9,10 @@ public class CrosshairCursor : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        Vector2 mouseCursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = mouseCursorPos;
+    void Update() {
+        if (!PauseMenu.isPaused) {
+            Vector2 mouseCursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            transform.position = mouseCursorPos;
+        }
     }
 }

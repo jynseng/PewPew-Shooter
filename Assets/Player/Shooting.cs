@@ -22,21 +22,23 @@ public class Shooting : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
-        mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
-        centerPoint = transform.position; // Center of player
-        toMouse = (mousePos - centerPoint).normalized; // Vector2 between cursor and player center
-        var offset = toMouse * gunRadius;
-        firePoint.position = centerPoint + offset; // Move firepoint to closest point to cursor
-        
-        float rot_z = Mathf.Atan2(toMouse.y, toMouse.x) * Mathf.Rad2Deg; // Rotate arrow so always pointing out
-        firePoint.rotation = Quaternion.Euler(0f, 0f, rot_z);
-        
-        if(Input.GetButton("Fire1")) {
-            Shoot();
-        }
+        if (!PauseMenu.isPaused) {
+            mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+            centerPoint = transform.position; // Center of player
+            toMouse = (mousePos - centerPoint).normalized; // Vector2 between cursor and player center
+            var offset = toMouse * gunRadius;
+            firePoint.position = centerPoint + offset; // Move firepoint to closest point to cursor
+            
+            float rot_z = Mathf.Atan2(toMouse.y, toMouse.x) * Mathf.Rad2Deg; // Rotate arrow so always pointing out
+            firePoint.rotation = Quaternion.Euler(0f, 0f, rot_z);
+            
+            if(Input.GetButton("Fire1")) {
+                Shoot();
+            }
 
-        if (shootCounter > 0) {
-            shootCounter -= Time.deltaTime;
+            if (shootCounter > 0) {
+                shootCounter -= Time.deltaTime;
+            }
         }
     }
 

@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform dashBar;
     [SerializeField] AudioSource dashSound;
     [SerializeField] AudioSource chainDashSound;
+    [SerializeField] AudioSource chainDashSound_2;
 
     private float dashWindow;
     private float dashCost = 3f; // Stamina cost of dash
@@ -115,7 +116,10 @@ public class PlayerMovement : MonoBehaviour
         if (withinWindow && !dashAttempted) { // Chain-dash, no stamina req'd
             chainDashCount++;
             chainDashSound.volume = chainDashCount*0.2f + 0.1f; // SFX gets louder each successive dash
-             chainDashSound.Play();
+            chainDashSound.Play();
+            if (chainDashCount == 4) {
+                chainDashSound_2.Play();
+            }
             dashWindow *= 0.5f; // Cut window in half (player must have more precise timing each successive dash)
             Dash();
             withinWindow = false; 
