@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody2D rb; 
     public float moveSpeed = 5f;
     public bool invincible = false;
-    public StaminaBar staminaBar;
+    public StaminaBar StaminaBar;
     public float stamina;
     Shooting shooting = null;    
     
@@ -33,14 +33,16 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 dashDirection;
     private float activeMoveSpeed;
     private float dashCounter; // Active dashing counter
+    private CameraShake CameraShake;
     
     void Start() {
         activeMoveSpeed = moveSpeed;
         dashBar.localScale = new Vector3(0,0,0);
         dashWindow = dashWindow_default;
         stamina = maxStamina;
-        if (staminaBar) {staminaBar.SetMaxStamina(maxStamina);}
+        if (StaminaBar) {StaminaBar.SetMaxStamina(maxStamina);}
         shooting = GetComponent<Shooting>();
+        CameraShake = Camera.main.GetComponent<CameraShake>();
     }
 
     void Update() {
@@ -92,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
         // Regenerate stamina over time, if not currently dashing
         if (stamina < maxStamina && dashCounter <= 0 && dashTimer < 0) {
             stamina += Time.deltaTime * staminaRegenRate;
-            staminaBar.SetStamina(stamina);
+            StaminaBar.SetStamina(stamina);
         }
     }
 
@@ -108,12 +110,12 @@ public class PlayerMovement : MonoBehaviour
     private void DashHandler() {
         if (dashTimer == -1 && stamina > dashCost) { // Normal dash, must have enough stamina
             stamina -= dashCost; // Dash costs player stamina
-            staminaBar.SetStamina(stamina);
+            StaminaBar.SetStamina(stamina);
             Dash();
             return;
         }
 
-        if (withinWindow && !dashAttempted) { // Chain-dash, no stamina req'd
+        if (withinWindow && !dashAttempted && chainDashCount < 4) { // Chain-dash, no stamina req'd
             chainDashCount++;
             chainDashSound.volume = chainDashCount*0.2f + 0.1f; // SFX gets louder each successive dash
             chainDashSound.Play();
@@ -135,6 +137,7 @@ public class PlayerMovement : MonoBehaviour
         dashBar.localScale = new Vector3(1,1,1);
         activeMoveSpeed = dashSpeed;
         dashCounter = dashLength;
-        invincible = true; // Become invincible while dashing       
+        invincible = true; // Become invincible while dashing
+        CameraShake.StartShake();       
     }
 }

@@ -43,7 +43,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 87e2452fe2c754248926c9a9ab93a467, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.6
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -258,7 +258,8 @@ MonoBehaviour:
   moveSpeed: 3
   shootCooldown: 3
   shootSound: {fileID: 3180399799422878631}
-  enemyBulletPrefab: {fileID: 37160044303894756, guid: 39a6313709959cd47bf3d0c1d3651d32, type: 3}
+  enemyBulletPrefab: {fileID: 37160044303894756, guid: 39a6313709959cd47bf3d0c1d3651d32,
+    type: 3}
   firePoint: {fileID: 2784164742441818791}
   health: {fileID: 2057568965811514144}
 --- !u!114 &1936778114881339983
@@ -701,7 +702,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: d1698dd553af8ef4d887bc83b9687173, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
