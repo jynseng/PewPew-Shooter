@@ -10,22 +10,22 @@ public class EnemyHealth : MonoBehaviour
 
     public HealthBar healthBar;
     public int currentHealth;
+    private Canvas canvas;
 
     void Start() {
         healthBar.SetMaxHealth(maxHealth);
         currentHealth = maxHealth;
+        canvas = GetComponentInChildren(typeof(Canvas)) as Canvas;
+        canvas.enabled = false;
     }
 
     public bool TakeDamage(int damage) {
+        canvas.enabled = true;
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
         damageSound.Play();
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
+        if (currentHealth <= 0) {Die();}
         return true;
-
     }
 
     private void Die() {
