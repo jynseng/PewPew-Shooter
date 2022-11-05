@@ -19786,6 +19786,11 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 2824140828845580485, guid: 497505cbe1846b7428d7b2d6174efc06,
+        type: 3}
+      propertyPath: bulletSpread
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 2824140828845580488, guid: 497505cbe1846b7428d7b2d6174efc06,
         type: 3}
       propertyPath: m_RootOrder
