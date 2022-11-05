@@ -174,6 +174,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &262792841 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2057568965811514156, guid: ceed7c0ae86d21945bd7221b4154643a,
+    type: 3}
+  m_PrefabInstance: {fileID: 2057568966489661769}
+  m_PrefabAsset: {fileID: 0}
+--- !u!50 &262792847
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 262792841}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!224 &277781136 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8231472400394701322, guid: 95f726dba5c716240bd9c62aacb8d966,
@@ -19520,6 +19547,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenuUI: {fileID: 1677706299}
+--- !u!1 &1846794587 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6789089186071182715, guid: 92792fe85410886428b5c94fd781d1e1,
+    type: 3}
+  m_PrefabInstance: {fileID: 6789089186449343751}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1846794591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846794587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98a610235d9c45c40b505323a9aa0e9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1879651714 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6222141639456440590, guid: c2a95b6e2dfaaff458bf94fef83015b1,
@@ -19667,6 +19712,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crosshair
       objectReference: {fileID: 0}
+    - target: {fileID: 2534222891806753524, guid: 2ed536e5a296fb64db4e9cdbbe41b624,
+        type: 3}
+      propertyPath: m_TagString
+      value: Crosshair
+      objectReference: {fileID: 0}
     - target: {fileID: 2534222891806753547, guid: 2ed536e5a296fb64db4e9cdbbe41b624,
         type: 3}
       propertyPath: m_RootOrder
@@ -19801,6 +19851,11 @@ PrefabInstance:
       propertyPath: dashSpeed
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 2824140828845580491, guid: 497505cbe1846b7428d7b2d6174efc06,
+        type: 3}
+      propertyPath: StaminaBar
+      value: 
+      objectReference: {fileID: 1879651715}
     - target: {fileID: 2824140828845580491, guid: 497505cbe1846b7428d7b2d6174efc06,
         type: 3}
       propertyPath: dashLength

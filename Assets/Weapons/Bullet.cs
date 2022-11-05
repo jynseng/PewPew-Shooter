@@ -9,7 +9,7 @@ public class Bullet : MonoBehaviour
     public bool isPlayerBullet = true;
 
     void OnEnable() {
-        Invoke("SelfDestruct", 4);
+        Invoke("SelfDestruct", 2);
     }
 
     void SelfDestruct() {
@@ -18,7 +18,7 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col) {
         if ((!isPlayerBullet && col.tag == "Enemy") || (isPlayerBullet && col.tag == "Player") || (col.tag == "Player" && col.GetComponent<PlayerMovement>().invincible)
-         || col.tag == "Projectile") {return;} // Don't collide with self, other bullets, or invincible player (i.e. while dashing)
+         || col.tag == "Projectile" || col.tag == "Crosshair") {return;} // Don't collide with self, other bullets, or invincible player (i.e. while dashing)
 
         GameObject effect = Instantiate(hitEffect, transform.position, Quaternion.identity); // Explosion effect
         Destroy(effect, 2f);
