@@ -16,11 +16,13 @@ public class Shooting : MonoBehaviour
     [SerializeField] float bulletForce = 30f;
     [SerializeField] float bulletSpread = 0.15f;
     [SerializeField] float fireRate = 0.2f; // Seconds between shots
+    [SerializeField] float firstShotReset = 0.6f; // Time to get first shot accuracy
 
     [SerializeField] float gunRadius = 1f;
     [SerializeField] AudioSource shootSound = null;
     
     private float shootCounter;
+    private float firstShotTimer = 0f; // Time for first shot accuracy
 
     // Update is called once per frame
     void Update() {
@@ -36,23 +38,29 @@ public class Shooting : MonoBehaviour
             
             if(Input.GetButton("Fire1")) { Shoot(); }
             if (shootCounter > 0) { shootCounter -= Time.deltaTime; }
+            if (firstShotTimer > 0) { firstShotTimer -= Time.deltaTime; }
         }
     }
 
     void Shoot() {
+        Debug.Log(firstShotTimer);
         if (shootCounter > 0) { return;}
         shootSound.Play();
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         Vector2 firePointPos2D = new Vector2(firePoint.position.x, firePoint.position.y); // Make firePoint.position a 2D vector
         shootCounter = fireRate;
-
-        // Bullet spread
-        float x = Random.Range(-1f, 1f) * bulletSpread;
-        float y = Random.Range(-1f, 1f) * bulletSpread;
         Vector2 direction = (firePointPos2D-centerPoint);
-        direction = new Vector2(direction.x + x, direction.y + y);
 
+        // Bullet spread, after first shot
+        if (firstShotTimer > 0) {
+            Debug.Log("Bullet spread");
+            float x = Random.Range(-1f, 1f) * bulletSpread; 
+            float y = Random.Range(-1f, 1f) * bulletSpread;
+            direction = new Vector2(direction.x + x, direction.y + y);
+        }
+        
+        firstShotTimer = firstShotReset;
         rb.AddForce((direction).normalized * bulletForce, ForceMode2D.Impulse);
     }
 
