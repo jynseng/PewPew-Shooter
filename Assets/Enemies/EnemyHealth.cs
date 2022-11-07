@@ -19,7 +19,9 @@ public class EnemyHealth : MonoBehaviour
         canvas.enabled = false;
     }
 
-    public bool TakeDamage(int damage) {
+    public bool TakeDamage(int damage, Vector2 location) {
+        // Stop moving
+        Debug.Log(location);
         canvas.enabled = true;
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);

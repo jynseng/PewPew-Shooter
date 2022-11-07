@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class Shooting : MonoBehaviour
 {
-    public Transform firePoint;
-    public GameObject bulletPrefab;
-    public Camera cam;
-
-    Vector2 mousePos;
-    private Vector2 toMouse;
-    private Vector2 centerPoint;
+    [SerializeField] Transform firePoint;
+    [SerializeField] GameObject bulletPrefab;
+    [SerializeField] Camera cam;
 
     // Gun specs
     [SerializeField] float bulletForce = 30f;
@@ -20,13 +16,21 @@ public class Shooting : MonoBehaviour
 
     [SerializeField] float gunRadius = 1f;
     [SerializeField] AudioSource shootSound = null;
-    
+
+    private Vector2 mousePos;
+    private Vector2 toMouse;
+    private Vector2 centerPoint;
+    private PlayerHealth playerHealth;
     private float shootCounter;
     private float firstShotTimer = 0f; // Time for first shot accuracy
 
+    void Start() {
+        playerHealth = GetComponent<PlayerHealth>();
+    }
+
     // Update is called once per frame
     void Update() {
-        if (!PauseMenu.isPaused) {
+        if (!PauseMenu.isPaused && playerHealth.isAlive) {
             mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
             centerPoint = transform.position; // Center of player
             toMouse = (mousePos - centerPoint).normalized; // Vector2 between cursor and player center
@@ -43,8 +47,7 @@ public class Shooting : MonoBehaviour
     }
 
     void Shoot() {
-        Debug.Log(firstShotTimer);
-        if (shootCounter > 0) { return;}
+        if (shootCounter > 0) { return; }
         shootSound.Play();
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
@@ -54,7 +57,6 @@ public class Shooting : MonoBehaviour
 
         // Bullet spread, after first shot
         if (firstShotTimer > 0) {
-            Debug.Log("Bullet spread");
             float x = Random.Range(-1f, 1f) * bulletSpread; 
             float y = Random.Range(-1f, 1f) * bulletSpread;
             direction = new Vector2(direction.x + x, direction.y + y);

@@ -4,45 +4,48 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public Rigidbody2D rb; 
-    public float moveSpeed = 5f;
-    public bool invincible = false;
-    public StaminaBar StaminaBar;
-    public float stamina;
-    Shooting shooting = null;    
-    
+    [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float dashSpeed = 35f;
     [SerializeField] private float dashLength = 0.3f;
     [SerializeField] private float dashCooldown = 0.5f;
     [SerializeField] private float maxStamina = 10f;
     [SerializeField] private float dashWindow_default = 0.4f; // Length of chain dash window in seconds
-    [SerializeField] private Transform dashBar;
+    [SerializeField] Transform dashBar;
     [SerializeField] AudioSource dashSound;
     [SerializeField] AudioSource chainDashSound;
     [SerializeField] AudioSource chainDashSound_2;
 
-    private float dashWindow;
+    public float stamina;
+    private float dashWindow; // Current length of dash chain timing window (centered on end of dash)
     private float dashCost = 3f; // Stamina cost of dash
     private float staminaRegenRate = 1.5f; // Stamina points regenerated per second
     private float dashTimer = -1f; // Timer that starts at dash start
     private bool withinWindow = false; // Was "dash" key pressed within chain-dash window?
     private bool dashAttempted = false; // Has player inputted "dash" during current dash? 
     private int chainDashCount = 0; // How many dashes have been chained this dash?
+    private float activeMoveSpeed;
+    private float dashCounter; // Active dashing counter
 
     private Vector2 moveInput;
     private Vector2 dashDirection;
-    private float activeMoveSpeed;
-    private float dashCounter; // Active dashing counter
-    private CameraShake CameraShake;
+    private CameraShake cameraShake;
+    private PlayerHealth playerHealth;
+    private Rigidbody2D rb; 
+    private StaminaBar staminaBar;
+    private Shooting shooting;
     
     void Start() {
         activeMoveSpeed = moveSpeed;
         dashBar.localScale = new Vector3(0,0,0);
         dashWindow = dashWindow_default;
         stamina = maxStamina;
-        if (StaminaBar) {StaminaBar.SetMaxStamina(maxStamina);}
+        staminaBar = GameObject.Find("PlayerStaminaBar").GetComponent<StaminaBar>();
+        if (staminaBar) { staminaBar.SetMaxStamina(maxStamina); }
+    
+        rb = GetComponent<Rigidbody2D>();
         shooting = GetComponent<Shooting>();
-        CameraShake = Camera.main.GetComponent<CameraShake>();
+        playerHealth = GetComponent<PlayerHealth>();
+        cameraShake = Camera.main.GetComponent<CameraShake>();
     }
 
     void Update() {
@@ -68,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
             dashBar.localScale = Vector3.Lerp(start, end, (dashTimer/dashLength+(dashWindow/2))); // Scale dashBar with dashCounter for testing purposes.
             if (dashCounter <= 0) { // If end of dash, then...
                 activeMoveSpeed = moveSpeed; // Reset move speed to normal
-                invincible = false;
+                playerHealth.Invincible = false;
             }
         }
 
@@ -94,11 +97,12 @@ public class PlayerMovement : MonoBehaviour
         // Regenerate stamina over time, if not currently dashing
         if (stamina < maxStamina && dashCounter <= 0 && dashTimer < 0) {
             stamina += Time.deltaTime * staminaRegenRate;
-            StaminaBar.SetStamina(stamina);
+            staminaBar.SetStamina(stamina);
         }
     }
 
     void FixedUpdate() {
+        if (rb == null) { return; } // If player dead
         if (dashCounter <= 0) { 
             rb.MovePosition(rb.position + moveInput.normalized * activeMoveSpeed * Time.fixedDeltaTime); // Handle actual movement independent of framerate
         } else {
@@ -110,7 +114,7 @@ public class PlayerMovement : MonoBehaviour
     private void DashHandler() {
         if (dashTimer == -1 && stamina > dashCost) { // Normal dash, must have enough stamina
             stamina -= dashCost; // Dash costs player stamina
-            StaminaBar.SetStamina(stamina);
+            staminaBar.SetStamina(stamina);
             Dash();
             return;
         }
@@ -119,10 +123,10 @@ public class PlayerMovement : MonoBehaviour
             chainDashCount++;
             chainDashSound.volume = chainDashCount*0.2f + 0.1f; // SFX gets louder each successive dash
             chainDashSound.Play();
-            if (chainDashCount == 4) {
+            if (chainDashCount == 3) { // Max chain dash
                 chainDashSound_2.Play();
             }
-            dashWindow *= 0.5f; // Cut window in half (player must have more precise timing each successive dash)
+            dashWindow *= 0.33f; // Cut window duration (player must have more precise timing each successive dash)
             Dash();
             withinWindow = false; 
             return;
@@ -137,7 +141,7 @@ public class PlayerMovement : MonoBehaviour
         dashBar.localScale = new Vector3(1,1,1);
         activeMoveSpeed = dashSpeed;
         dashCounter = dashLength;
-        invincible = true; // Become invincible while dashing
-        CameraShake.StartShake();       
+        playerHealth.Invincible = true; // Become invincible while dashing
+        cameraShake.StartShake();       
     }
 }

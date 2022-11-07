@@ -17,8 +17,8 @@ public class Bullet : MonoBehaviour
     }   
 
     void OnTriggerEnter2D(Collider2D col) {
-        if ((!isPlayerBullet && col.tag == "Enemy") || (isPlayerBullet && col.tag == "Player") || (col.tag == "Player" && col.GetComponent<PlayerMovement>().invincible)
-         || col.tag == "Projectile" || col.tag == "Crosshair") {return;} // Don't collide with self, other bullets, or invincible player (i.e. while dashing)
+        if ((!isPlayerBullet && col.tag == "Enemy") || (isPlayerBullet && col.tag == "Player") || col.tag == "Projectile" || 
+            col.tag == "Crosshair") {return;} // Don't collide with self, other bullets
 
         GameObject effect = Instantiate(hitEffect, transform.position, Quaternion.identity); // Explosion effect
         Destroy(effect, 2f);
@@ -26,9 +26,9 @@ public class Bullet : MonoBehaviour
         EnemyHealth enemyHealth = col.gameObject.GetComponent<EnemyHealth>();
         PlayerHealth playerHealth = col.gameObject.GetComponent<PlayerHealth>();
         if (enemyHealth != null) {
-            enemyHealth.TakeDamage(damage);
+            enemyHealth.TakeDamage(damage, transform.position);
         } else if (playerHealth != null) {
-            playerHealth.TakeDamage(damage);
+            playerHealth.TakeDamage(damage, transform.position);
         }
         Destroy(gameObject);
     }

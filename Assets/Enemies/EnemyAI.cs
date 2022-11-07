@@ -4,22 +4,23 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {   
-    [SerializeField] float scanRadius = 5f;
-    [SerializeField] float chaseRadius = 50f;
-    [SerializeField] float roamRadius = 3f;
-    [SerializeField] float moveSpeed = 1f;
-    [SerializeField] float shootCooldown = 3f;
+    [SerializeField] private float scanRadius = 5f;
+    [SerializeField] private float chaseRadius = 50f;
+    [SerializeField] private float roamRadius = 3f;
+    [SerializeField] private float moveSpeed = 1f;
+    [SerializeField] private float shootCooldown = 3f;
+    [SerializeField] private bool canShoot = true;
 
     [SerializeField] AudioSource shootSound = null;
     [SerializeField] GameObject enemyBulletPrefab;
     public Transform firePoint;
     public EnemyHealth health = null;
 
-    bool targeting = false;
-    float distanceToTarget = Mathf.Infinity;
-    float distanceToRandomDest;
-    float bulletForce = 12f;
-    float shootCooldownCounter = 0;
+    private bool targeting = false;
+    private float distanceToTarget = Mathf.Infinity;
+    private float distanceToRandomDest;
+    private float bulletForce = 12f;
+    private float shootCooldownCounter = 0;
 
     Vector2 randomDest;
     Vector2 currentPos;
@@ -71,7 +72,7 @@ public class EnemyAI : MonoBehaviour
     }
 
     void Shoot() {
-        if (health.currentHealth <= 0) {return;} // If this enemy is dead, don't shoot
+        if (health.currentHealth <= 0 || !canShoot) {return;} // If this enemy is dead, don't shoot
         shootSound.Play();
         GameObject bullet = Instantiate(enemyBulletPrefab, firePoint.position, Quaternion.identity);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();

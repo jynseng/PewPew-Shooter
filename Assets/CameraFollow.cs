@@ -5,13 +5,13 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     [SerializeField] private float camMoveFactor = 2.5f;
-    public Transform player;
+    [SerializeField] private float dampTime = 0.15f;
+    [SerializeField] Transform player;
+
     private Vector3 velocity = Vector3.zero;
-    public float dampTime = 0.15f;
     private bool mouseInFrame = false;
 
     void FixedUpdate() {
-        
         if (player) {
             // Move camera 1:1 with player movement
             Vector3 target = new Vector3(player.position.x, player.position.y, 0f);

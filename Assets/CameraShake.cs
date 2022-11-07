@@ -13,10 +13,6 @@ public class CameraShake : MonoBehaviour
         mainCamera = Camera.main;
     }
 
-    void Update() {
-
-    }
-
     public void StartShake() {
         if (!isShaking) {
             StartCoroutine(ShakeCamera());

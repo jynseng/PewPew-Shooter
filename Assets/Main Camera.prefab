@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6789089186071182712}
   - component: {fileID: 6789089186071182714}
   - component: {fileID: 6789089186071182713}
+  - component: {fileID: 1846794591}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -43,7 +44,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BackGroundColor: {r: 0.26435438, g: 0.33784702, b: 0.4339623, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -96,6 +97,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 341790239ad15954a9439d9f6d7aa203, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  camMoveFactor: 2
   dampTime: 0.15
-  camMoveFactor: 3
+  player: {fileID: 0}
+--- !u!114 &1846794591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6789089186071182715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98a610235d9c45c40b505323a9aa0e9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
