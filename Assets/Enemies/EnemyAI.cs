@@ -4,11 +4,21 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {   
+    [Tooltip("How far to scan for targets")]
     [SerializeField] private float scanRadius = 5f;
+
+    [Tooltip("Distance to target to start chasing")]
     [SerializeField] private float chaseRadius = 50f;
+
+    [Tooltip("Max distance to random pathfinding destination")]
     [SerializeField] private float roamRadius = 5f;
+
     [SerializeField] private float moveSpeed = 1f;
+
+    [Tooltip("Seconds bewteen shots")]
     [SerializeField] private float shootCooldown = 3f;
+
+    [Tooltip("Whether or not can shoot, for testing/debugging")]
     [SerializeField] private bool canShoot = true;
 
     [SerializeField] AudioSource shootSound = null;
@@ -47,18 +57,15 @@ public class EnemyAI : MonoBehaviour
 
         // If player out of reach while targeting, stop chasing and start roaming again
         if (targeting && distanceToTarget > chaseRadius) {
-            Debug.Log("Not targeting anymore");
             targeting = false;
             PickNewRandomDest();
         }  
 
         // If player target comes within scan radius, start chasing
         if (targeting || distanceToTarget <= scanRadius) { 
-            Debug.Log("Targeting");
             targeting = true; 
             ChasePlayer();
         } else { 
-            Debug.Log("Else statement reached");
             transform.position = Vector2.MoveTowards(transform.position, randomDest, moveSpeed * Time.deltaTime); // If not within radius, just roam
             if (distanceToRandomDest <= 0.4f) {
                 PickNewRandomDest();

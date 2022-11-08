@@ -10,11 +10,19 @@ public class Shooting : MonoBehaviour
 
     // Gun specs
     [SerializeField] float bulletForce = 30f;
-    [SerializeField] float bulletSpread = 0.15f;
-    [SerializeField] float fireRate = 0.2f; // Seconds between shots
-    [SerializeField] float firstShotReset = 0.6f; // Time to get first shot accuracy
 
+    [Tooltip("aka bloom")]
+    [SerializeField] float bulletSpread = 0.15f;
+
+    [Tooltip("Seconds between shots")]
+    [SerializeField] float fireRate = 0.2f;
+
+    [Tooltip("Seconds to get first shot accuracy")]
+    [SerializeField] float firstShotReset = 0.6f;
+
+    [Tooltip("How far from player center the firepoint is")]
     [SerializeField] float gunRadius = 1f;
+
     [SerializeField] AudioSource shootSound = null;
 
     private Vector2 mousePos;

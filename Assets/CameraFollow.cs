@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
+    [Tooltip("How much the camera moves towards the crosshair")]
     [SerializeField] private float camMoveFactor = 2.5f;
+    [Tooltip("How fast camera moves towards crosshair")]
     [SerializeField] private float dampTime = 0.15f;
     [SerializeField] Transform player;
 

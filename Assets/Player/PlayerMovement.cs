@@ -4,16 +4,26 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Tooltip("Normal walk speed")]
     [SerializeField] private float moveSpeed = 5f;
+    
     [SerializeField] private float dashSpeed = 35f;
     [SerializeField] private float dashLength = 0.3f;
+
+    [Tooltip("Seconds after dashing you can dash again")]
     [SerializeField] private float dashCooldown = 0.5f;
+
     [SerializeField] private float maxStamina = 10f;
-    [SerializeField] private float dashWindow_default = 0.4f; // Length of chain dash window in seconds
+
+    [Tooltip("Length of chain dash window in seconds")]
+    [SerializeField] private float dashWindow_default = 0.4f; 
+
     [SerializeField] private bool canMove = true;
     [SerializeField] Transform dashBar;
     [SerializeField] AudioSource dashSound;
     [SerializeField] AudioSource chainDashSound;
+
+    [Tooltip("Plays when maxing out chain dash")]
     [SerializeField] AudioSource chainDashSound_2;
 
     public float stamina;

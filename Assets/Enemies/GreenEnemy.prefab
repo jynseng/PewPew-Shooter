@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2057568965811514145}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &8923898340742766646
 AudioSource:
@@ -171,6 +171,7 @@ GameObject:
   - component: {fileID: 2057568965811514144}
   - component: {fileID: 3749835848226283327}
   - component: {fileID: 1936778114881339983}
+  - component: {fileID: 3957636740556612296}
   m_Layer: 0
   m_Name: GreenEnemy
   m_TagString: Enemy
@@ -189,10 +190,10 @@ Transform:
   m_LocalPosition: {x: -6.32, y: -1.04, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 5706771779363891352}
   - {fileID: 2019741577181560124}
   - {fileID: 3713707737780271244}
   - {fileID: 8835530798505149295}
-  - {fileID: 5706771779363891352}
   - {fileID: 300723475458674434}
   - {fileID: 2784164742441818791}
   m_Father: {fileID: 0}
@@ -260,7 +261,6 @@ MonoBehaviour:
   maxHealth: 50
   damageSound: {fileID: 8923898340742766646}
   deathSound: {fileID: 2360270587401087784}
-  healthBar: {fileID: 5760440521562428734}
   currentHealth: 0
 --- !u!114 &3749835848226283327
 MonoBehaviour:
@@ -299,6 +299,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   meleeDamage: 30
+--- !u!114 &3957636740556612296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2057568965811514156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33a32e4f0251c59408f3cfe9f22cc76e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  whiteMat: {fileID: 2100000, guid: ee9664bc751024a4e9b4664474263aa5, type: 2}
+  originalMat: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  spriteRenderer: {fileID: 8123517229135617654}
 --- !u!1 &2558950676025368314
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,7 +343,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2057568965811514145}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8123517229135617654
 SpriteRenderer:
@@ -488,7 +503,7 @@ RectTransform:
   m_Children:
   - {fileID: 6935091011731569617}
   m_Father: {fileID: 2057568965811514145}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -712,7 +727,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2057568965811514145}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &2360270587401087784
 AudioSource:

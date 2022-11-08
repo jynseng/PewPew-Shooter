@@ -12,8 +12,11 @@ public class PlayerHealth : MonoBehaviour
     private HealthBar healthBar;
     private Rigidbody2D rb;
     private PlayerMovement playerMovement;
+    private SpriteFlash spriteFlash;
     [SerializeField] CameraShake CameraShake;
+    [Tooltip("Plays when taking damage")]
     [SerializeField] AudioSource damageSound;
+    [Tooltip("Plays when dying")]
     [SerializeField] AudioSource deathSound;
 
     void Start() {
@@ -23,6 +26,7 @@ public class PlayerHealth : MonoBehaviour
         CameraShake = Camera.main.GetComponent<CameraShake>();
         rb = GetComponent<Rigidbody2D>();
         playerMovement = GetComponent<PlayerMovement>();
+        spriteFlash = GetComponent<SpriteFlash>();
     }
 
     public void AddHealth(int health) {
@@ -36,6 +40,7 @@ public class PlayerHealth : MonoBehaviour
         StartCoroutine(KnockBackCoroutine(damage, location));
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
+        spriteFlash.Flash();
         CameraShake.StartShake();
         if (currentHealth <= 0) { Die(); }
     }

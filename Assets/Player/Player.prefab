@@ -255,6 +255,7 @@ GameObject:
   - component: {fileID: 2824140828845580485}
   - component: {fileID: 2824140828882851471}
   - component: {fileID: 1452237095540592846}
+  - component: {fileID: 5134492547843620628}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -408,6 +409,21 @@ SortingGroup:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
+--- !u!114 &5134492547843620628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2824140828845580489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33a32e4f0251c59408f3cfe9f22cc76e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  whiteMat: {fileID: 2100000, guid: ee9664bc751024a4e9b4664474263aa5, type: 2}
+  originalMat: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  spriteRenderer: {fileID: 2824140827150273182}
 --- !u!1 &3236693257934639615
 GameObject:
   m_ObjectHideFlags: 0
@@ -705,7 +721,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: d1698dd553af8ef4d887bc83b9687173, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.6
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 0
   Mute: 0
