@@ -6,15 +6,15 @@ public class EnemyAI : MonoBehaviour
 {   
     [SerializeField] private float scanRadius = 5f;
     [SerializeField] private float chaseRadius = 50f;
-    [SerializeField] private float roamRadius = 3f;
+    [SerializeField] private float roamRadius = 5f;
     [SerializeField] private float moveSpeed = 1f;
     [SerializeField] private float shootCooldown = 3f;
     [SerializeField] private bool canShoot = true;
 
     [SerializeField] AudioSource shootSound = null;
     [SerializeField] GameObject enemyBulletPrefab;
-    public Transform firePoint;
-    public EnemyHealth health = null;
+    [SerializeField] Transform firePoint;
+    [SerializeField] EnemyHealth health = null;
 
     private bool targeting = false;
     private float distanceToTarget = Mathf.Infinity;
@@ -25,33 +25,42 @@ public class EnemyAI : MonoBehaviour
     Vector2 randomDest;
     Vector2 currentPos;
     Transform target = null;
+    PlayerHealth playerHealth;
 
-    void Start() {
-        //health = GetComponent<EnemyHealth>();
-        target = FindObjectOfType<PlayerHealth>().transform;
+    private void Start() {
+        playerHealth = FindObjectOfType<PlayerHealth>();
+        target = playerHealth.transform;
         targeting = false;
 
         currentPos = new Vector2(transform.position.x, transform.position.y); // Convert current position to 2D vector
         PickNewRandomDest();
     }
 
-    void Update() {
-        distanceToTarget = Vector2.Distance(target.position, transform.position);
+    private void Update() {
+        if (playerHealth.isAlive) {
+            distanceToTarget = Vector2.Distance(target.position, transform.position);
+        } else {
+            distanceToTarget = Mathf.Infinity;
+            targeting = false;
+        }
         distanceToRandomDest = Vector2.Distance(randomDest, transform.position);
 
         // If player out of reach while targeting, stop chasing and start roaming again
         if (targeting && distanceToTarget > chaseRadius) {
+            Debug.Log("Not targeting anymore");
             targeting = false;
             PickNewRandomDest();
         }  
 
         // If player target comes within scan radius, start chasing
         if (targeting || distanceToTarget <= scanRadius) { 
+            Debug.Log("Targeting");
             targeting = true; 
             ChasePlayer();
         } else { 
+            Debug.Log("Else statement reached");
             transform.position = Vector2.MoveTowards(transform.position, randomDest, moveSpeed * Time.deltaTime); // If not within radius, just roam
-            if (distanceToRandomDest <= .5) {
+            if (distanceToRandomDest <= 0.4f) {
                 PickNewRandomDest();
             }
         }
@@ -61,7 +70,7 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    void ChasePlayer() {
+    private void ChasePlayer() {
         if (distanceToTarget >= 1) {
             transform.position = Vector2.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
         }
@@ -71,8 +80,8 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    void Shoot() {
-        if (health.currentHealth <= 0 || !canShoot) {return;} // If this enemy is dead, don't shoot
+    private void Shoot() {
+        if (health.currentHealth <= 0 || !playerHealth.isAlive || !canShoot) { return; } // If this enemy is dead, don't shoot
         shootSound.Play();
         GameObject bullet = Instantiate(enemyBulletPrefab, firePoint.position, Quaternion.identity);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
@@ -80,7 +89,7 @@ public class EnemyAI : MonoBehaviour
         rb.AddForce((target.position-firePoint.position).normalized * bulletForce, ForceMode2D.Impulse);
     }
 
-    void PickNewRandomDest() {
+    private void PickNewRandomDest() {
         randomDest = currentPos + Random.insideUnitCircle.normalized * roamRadius;
     }
 }

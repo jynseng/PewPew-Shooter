@@ -812,7 +812,7 @@ SortingGroup:
   m_Enabled: 1
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
 --- !u!114 &595377142 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2824140828882851471, guid: 497505cbe1846b7428d7b2d6174efc06,
@@ -998,7 +998,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &648824266
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22401,6 +22401,21 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 3749835848226283327, guid: ceed7c0ae86d21945bd7221b4154643a,
+        type: 3}
+      propertyPath: canShoot
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3749835848226283327, guid: ceed7c0ae86d21945bd7221b4154643a,
+        type: 3}
+      propertyPath: roamRadius
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3749835848226283327, guid: ceed7c0ae86d21945bd7221b4154643a,
+        type: 3}
+      propertyPath: scanRadius
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ceed7c0ae86d21945bd7221b4154643a, type: 3}
 --- !u!1001 &2534222893445201418
@@ -22548,6 +22563,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2824140828845580490, guid: 497505cbe1846b7428d7b2d6174efc06,
+        type: 3}
+      propertyPath: m_Mass
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2824140828845580491, guid: 497505cbe1846b7428d7b2d6174efc06,
         type: 3}

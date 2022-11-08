@@ -8,11 +8,11 @@ public class PlayerHealth : MonoBehaviour
     public int currentHealth;
     public bool isAlive = true;
 
-    private bool invincible = false;
+    private bool isInvincible = false;
     private HealthBar healthBar;
-    [SerializeField] Rigidbody2D rb;
+    private Rigidbody2D rb;
+    private PlayerMovement playerMovement;
     [SerializeField] CameraShake CameraShake;
-
     [SerializeField] AudioSource damageSound;
     [SerializeField] AudioSource deathSound;
 
@@ -22,12 +22,18 @@ public class PlayerHealth : MonoBehaviour
         if (healthBar) {healthBar.SetMaxHealth(maxHealth); }
         CameraShake = Camera.main.GetComponent<CameraShake>();
         rb = GetComponent<Rigidbody2D>();
+        playerMovement = GetComponent<PlayerMovement>();
+    }
+
+    public void AddHealth(int health) {
+        Debug.Log("Adding " + health + " health");
+        currentHealth += health;
     }
 
     public void TakeDamage(int damage, Vector2 location) {
-        if (invincible) { return; } // Ignore if player is invincible (i.e. while dashing)
+        if (isInvincible) { return; } // Ignore if player is invincible (i.e. while dashing)
         damageSound.Play();
-        KnockBack(location);
+        StartCoroutine(KnockBackCoroutine(damage, location));
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
         CameraShake.StartShake();
@@ -41,18 +47,42 @@ public class PlayerHealth : MonoBehaviour
         audioSource.clip = deathSound.clip;
         audioSource.Play();
         Destroy(audioSource, 2f);
-        Destroy(GetComponentInChildren<SpriteRenderer>());
-        Destroy(rb);
+        foreach (var sprite in GetComponentsInChildren<SpriteRenderer>()) {
+            sprite.enabled = false;
+        }
+        Destroy(GetComponentInChildren<BoxCollider2D>());
+        Destroy(rb, 0.5f);
     }
 
-    public bool Invincible {
-        get { return invincible; }
-        set { invincible = value; }
+    public bool IsInvincible {
+        get { return isInvincible; }
+        set { isInvincible = value; }
     }
 
-    private void KnockBack(Vector3 location) {
-        Vector2 destination = (location - transform.position) * -1;
-        Debug.Log("Position: " + transform.position + " Location: " + location + " Destination: " + destination);
-        // Apply force to rigidbody
+    private IEnumerator KnockBackCoroutine(int damage, Vector3 location) {
+        playerMovement.CanMove = false;
+        float thrust = damage * 5f;
+        Vector3 delta = (transform.position-location).normalized;
+        Vector2 force = delta * thrust;
+        if (rb != null) { 
+            rb.AddForce(force, ForceMode2D.Impulse);
+        }
+        yield return new WaitForSeconds(0.1f);
+        if (rb != null) {
+            rb.velocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+        }
+        playerMovement.CanMove = true;
     }
+
+    /* Knock player back based on how much damage taken. (Kinematic only)
+    private IEnumerator KnockBackCoroutine(int damage, Vector3 location) {
+        playerMovement.CanMove = false; // Momentarily disable player movement controller to apply velocity
+        float thrust = damage * 1.5f;
+        Vector3 delta = (transform.position-location).normalized;
+        Vector3 force = delta * thrust;
+        rb.velocity = new Vector2(force.x, force.y);
+        yield return new WaitForSeconds(0.1f);
+        playerMovement.CanMove = true;
+    } */
 }

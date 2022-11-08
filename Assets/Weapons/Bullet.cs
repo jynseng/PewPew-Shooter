@@ -8,17 +8,19 @@ public class Bullet : MonoBehaviour
     [SerializeField] int damage = 10;
     public bool isPlayerBullet = true;
 
-    void OnEnable() {
+    private void OnEnable() {
         Invoke("SelfDestruct", 2);
     }
 
-    void SelfDestruct() {
+    private void SelfDestruct() {
         Destroy(gameObject);
     }   
 
-    void OnTriggerEnter2D(Collider2D col) {
-        if ((!isPlayerBullet && col.tag == "Enemy") || (isPlayerBullet && col.tag == "Player") || col.tag == "Projectile" || 
-            col.tag == "Crosshair") {return;} // Don't collide with self, other bullets
+    private void OnTriggerEnter2D(Collider2D col) {
+        // Don't collide with self, other bullets, or invincible player
+        if ( (!isPlayerBullet && col.tag == "Enemy") || (isPlayerBullet && col.tag == "Player") || (col.tag == "Player" && col.GetComponent<PlayerHealth>().IsInvincible == true) || col.tag == "Projectile" || col.tag == "Crosshair") {
+            return;
+        } 
 
         GameObject effect = Instantiate(hitEffect, transform.position, Quaternion.identity); // Explosion effect
         Destroy(effect, 2f);

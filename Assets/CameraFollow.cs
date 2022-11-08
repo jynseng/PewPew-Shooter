@@ -12,7 +12,7 @@ public class CameraFollow : MonoBehaviour
     private bool mouseInFrame = false;
 
     void FixedUpdate() {
-        if (player) {
+        if (player && player.GetComponent<PlayerHealth>().isAlive) {
             // Move camera 1:1 with player movement
             Vector3 target = new Vector3(player.position.x, player.position.y, 0f);
             Vector3 camPoint = GetComponent<Camera>().ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));

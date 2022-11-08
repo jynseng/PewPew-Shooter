@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float dashCooldown = 0.5f;
     [SerializeField] private float maxStamina = 10f;
     [SerializeField] private float dashWindow_default = 0.4f; // Length of chain dash window in seconds
+    [SerializeField] private bool canMove = true;
     [SerializeField] Transform dashBar;
     [SerializeField] AudioSource dashSound;
     [SerializeField] AudioSource chainDashSound;
@@ -25,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
     private int chainDashCount = 0; // How many dashes have been chained this dash?
     private float activeMoveSpeed;
     private float dashCounter; // Active dashing counter
-
+    
     private Vector2 moveInput;
     private Vector2 dashDirection;
     private CameraShake cameraShake;
@@ -34,6 +35,11 @@ public class PlayerMovement : MonoBehaviour
     private StaminaBar staminaBar;
     private Shooting shooting;
     
+    public bool CanMove {
+        get { return canMove; }
+        set { canMove = value; }
+    }
+
     void Start() {
         activeMoveSpeed = moveSpeed;
         dashBar.localScale = new Vector3(0,0,0);
@@ -71,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
             dashBar.localScale = Vector3.Lerp(start, end, (dashTimer/dashLength+(dashWindow/2))); // Scale dashBar with dashCounter for testing purposes.
             if (dashCounter <= 0) { // If end of dash, then...
                 activeMoveSpeed = moveSpeed; // Reset move speed to normal
-                playerHealth.Invincible = false;
+                playerHealth.IsInvincible = false;
             }
         }
 
@@ -102,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void FixedUpdate() {
-        if (rb == null) { return; } // If player dead
+        if (rb == null || !canMove) { return; } // If player dead
         if (dashCounter <= 0) { 
             rb.MovePosition(rb.position + moveInput.normalized * activeMoveSpeed * Time.fixedDeltaTime); // Handle actual movement independent of framerate
         } else {
@@ -141,7 +147,7 @@ public class PlayerMovement : MonoBehaviour
         dashBar.localScale = new Vector3(1,1,1);
         activeMoveSpeed = dashSpeed;
         dashCounter = dashLength;
-        playerHealth.Invincible = true; // Become invincible while dashing
+        playerHealth.IsInvincible = true; // Become invincible while dashing
         cameraShake.StartShake();       
     }
 }
