@@ -30,8 +30,8 @@ public class PlayerHealth : MonoBehaviour
     }
 
     public void AddHealth(int health) {
-        Debug.Log("Adding " + health + " health");
         currentHealth += health;
+        healthBar.SetHealth(currentHealth);
     }
 
     public void TakeDamage(int damage, Vector2 location) {

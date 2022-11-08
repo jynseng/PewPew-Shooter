@@ -82,9 +82,9 @@ public class PlayerMovement : MonoBehaviour
         // If currently dashing, decrement dash counter
         if (dashCounter > 0) {
             dashCounter -= Time.deltaTime; 
-            Vector3 start = new Vector3(1,1,1);
+            Vector3 start = new Vector3(2,2,2);
             Vector3 end = new Vector3 (0,0,0);
-            dashBar.localScale = Vector3.Lerp(start, end, (dashTimer/dashLength+(dashWindow/2))); // Scale dashBar with dashCounter for testing purposes.
+            dashBar.localScale = Vector3.Lerp(start, end, (dashTimer/dashLength+(dashWindow*.75f))); // Scale dashBar with dashCounter for testing purposes.
             if (dashCounter <= 0) { // If end of dash, then...
                 activeMoveSpeed = moveSpeed; // Reset move speed to normal
                 playerHealth.IsInvincible = false;
@@ -93,15 +93,15 @@ public class PlayerMovement : MonoBehaviour
 
         if (dashTimer >= 0) { // Dash started
             dashTimer += Time.deltaTime; 
-            if (dashTimer >= dashLength-(dashWindow/2) && dashTimer < dashLength+(dashWindow/2)) { // Check if within dash window 
+            if (dashTimer >= dashLength-(dashWindow/4) && dashTimer < dashLength+(dashWindow*0.75)) { // Check if within dash window 
                 withinWindow = true;
-                dashBar.GetComponent<SpriteRenderer>().color = Color.blue;
+                // dashBar.GetComponent<SpriteRenderer>().color = Color.blue;
             } else if (dashTimer < dashLength) { // Mid-dash before window
-                dashBar.GetComponent<SpriteRenderer>().color = Color.white;
+                // dashBar.GetComponent<SpriteRenderer>().color = Color.white;
             } else if (dashTimer < dashLength+dashCooldown) { // After dash, after window, before cooldown
                 chainDashCount = 0;
                 dashBar.localScale = new Vector3(0,0,0); // Hide the dashBar visual indicator
-                dashBar.GetComponent<SpriteRenderer>().color = Color.white;
+                // dashBar.GetComponent<SpriteRenderer>().color = Color.white;
                 withinWindow = false;
             } else { // Fully cooled down
                 dashTimer = -1f;
@@ -141,6 +141,7 @@ public class PlayerMovement : MonoBehaviour
             chainDashSound.Play();
             if (chainDashCount == 3) { // Max chain dash
                 chainDashSound_2.Play();
+                playerHealth.AddHealth(20); // Getting max dash regens health
             }
             dashWindow *= 0.33f; // Cut window duration (player must have more precise timing each successive dash)
             Dash();
